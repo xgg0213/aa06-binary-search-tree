@@ -122,14 +122,52 @@ function helperHeight(currentNode, h=-1){
 
 function balancedTree (rootNode) {
   // Your code here 
+  // empty tree
+  if (!rootNode) return true;
+
+  // non empty tree
+  return helperBalanced(rootNode.left, h=-1) && helperBalanced(rootNode.right, h=-1) ;
+}
+
+function helperBalanced(currentNode, h=-1){
+
+  if (!currentNode) return h;
+  h++;
+
+  h_left = helperHeight(currentNode.left, h);
+  h_right = helperHeight(currentNode.right, h);
+
+  return Math.abs(h_left - h_right) < 1;
 }
 
 function countNodes (rootNode) {
   // Your code here 
+  if (!rootNode) return 0;
+
+  let queue = [rootNode];
+  let cnt = 1;
+
+  while (queue.length) {
+    let el = queue.shift();
+
+    if (el.left) {
+      cnt++;
+      queue.push(el.left)
+    }
+    if (el.right) {
+      cnt++;
+      queue.push(el.right)
+    }
+  }
+  return cnt;
 }
 
 function getParentNode (rootNode, target) {
   // Your code here 
+  if (target === rootNode.val) return null;
+
+  
+  return undefined
 }
 
 function inOrderPredecessor (rootNode, target) {
@@ -187,5 +225,26 @@ btRoot.right.right = new TreeNode(7);
 // findMinBT(btRoot);
 
 //console.log([btRoot].shift())
-console.log(getHeight(btRoot.left))//.to.equal(1);
-console.log(getHeight(btRoot))
+// console.log(getHeight(btRoot.left))//.to.equal(1);
+// console.log(getHeight(btRoot))
+
+console.log(balancedTree(btRoot.left))//.to.be.true;
+
+
+btRootBig = new TreeNode(13);
+btRootBig.left = new TreeNode(2);
+btRootBig.right = new TreeNode(3);
+btRootBig.left.left = new TreeNode(4);
+btRootBig.left.right = new TreeNode(5);
+btRootBig.right.right = new TreeNode(6);
+btRootBig.left.left.left = new TreeNode(7);
+btRootBig.left.right.left = new TreeNode(8);
+btRootBig.left.right.right = new TreeNode(9);
+btRootBig.right.right.right = new TreeNode(10);
+btRootBig.left.right.right.left = new TreeNode(11);
+btRootBig.right.right.right.right = new TreeNode(12);
+btRootBig.right.right.right.right.left = new TreeNode(1);
+
+console.log(balancedTree(btRootBig))
+
+
