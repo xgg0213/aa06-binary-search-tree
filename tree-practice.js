@@ -99,25 +99,25 @@ function findMaxBT (rootNode) {
   return max;
 }
 
+// option 1: with recursion helper function
 function getHeight (rootNode) {
   // Your code here 
   if (!rootNode) return -1;
+  
+  return helperHeight(rootNode, h=-1)
 
-  // let queue = [rootNode];
-  // let h = 0;
+  
+}
 
-  // while (queue.length) {
-  //   let el = queue.shift();
-  //   if (el.left) {
-  //     queue.push(el.left);
-  //   }
-  //   if (el.right) {
-  //     queue.push(el.right);
-  //   }
-  //   h+=1
-  // }
+function helperHeight(currentNode, h=-1){
 
-  // return h;
+  if (!currentNode) return h;
+  h++;
+
+  h_left = helperHeight(currentNode.left, h);
+  h_right = helperHeight(currentNode.right, h);
+
+  return Math.max(h_left, h_right);
 }
 
 function balancedTree (rootNode) {
@@ -182,8 +182,10 @@ btRoot.right = new TreeNode(3);
 btRoot.right.left = new TreeNode(6);
 btRoot.right.right = new TreeNode(7);
 
-console.log(findMaxBT(btRoot))//.to.equal(1);
-//console.log(btRoot);
-findMinBT(btRoot);
+// console.log(findMaxBT(btRoot))//.to.equal(1);
+// //console.log(btRoot);
+// findMinBT(btRoot);
 
 //console.log([btRoot].shift())
+console.log(getHeight(btRoot.left))//.to.equal(1);
+console.log(getHeight(btRoot))
