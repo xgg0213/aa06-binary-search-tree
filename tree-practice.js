@@ -185,11 +185,32 @@ function getParentNode (rootNode, target) {
 
 function inOrderPredecessor (rootNode, target) {
   // Your code here 
-  
+  let array = inOrderTraversal(rootNode, arr=[]);
+
+  // if (!arr.includes(target)) return undefined;
+
+  if (array[0] === target) return null;
+
+  for (let i = 1; i < array.length; i++) {
+    if (array[i]===target) return array[i-1];
+  }
+
+  return undefined;
+}
+
+function inOrderTraversal(currentNode = rootNode, arr=[]) {
+  if (!currentNode) return;
+
+  inOrderTraversal(currentNode.left,arr);
+  arr.push(currentNode.val);
+  inOrderTraversal(currentNode.right,arr);
+
+  return arr; // why do I have to put return arr here, instead of making return to return arr on line 202 (base case)?
 }
 
 function deleteNodeBST(rootNode, target) {
   // Do a traversal to find the node. Keep track of the parent
+  
 
   // Undefined if the target cannot be found
 
@@ -242,7 +263,7 @@ btRoot.right.right = new TreeNode(7);
 // console.log(getHeight(btRoot.left))//.to.equal(1);
 // console.log(getHeight(btRoot))
 
-console.log(balancedTree(btRoot.left))//.to.be.true;
+// console.log(balancedTree(btRoot.left))//.to.be.true;
 
 
 btRootBig = new TreeNode(13);
@@ -259,6 +280,6 @@ btRootBig.left.right.right.left = new TreeNode(11);
 btRootBig.right.right.right.right = new TreeNode(12);
 btRootBig.right.right.right.right.left = new TreeNode(1);
 
-console.log(balancedTree(btRootBig))
+console.log(inOrderTraversal(btRootBig))
 
 
