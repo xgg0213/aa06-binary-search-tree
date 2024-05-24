@@ -105,8 +105,6 @@ function getHeight (rootNode) {
   if (!rootNode) return -1;
   
   return helperHeight(rootNode, h=-1)
-
-  
 }
 
 function helperHeight(currentNode, h=-1){
@@ -114,8 +112,8 @@ function helperHeight(currentNode, h=-1){
   if (!currentNode) return h;
   h++;
 
-  h_left = helperHeight(currentNode.left, h);
-  h_right = helperHeight(currentNode.right, h);
+  const h_left = helperHeight(currentNode.left, h);
+  const h_right = helperHeight(currentNode.right, h);
 
   return Math.max(h_left, h_right);
 }
@@ -126,18 +124,49 @@ function balancedTree (rootNode) {
   if (!rootNode) return true;
 
   // non empty tree
-  return helperBalanced(rootNode.left, h=-1) && helperBalanced(rootNode.right, h=-1) ;
+  // need to iterate through each of the node within the tree, not just the rootNode
+  let queue = [rootNode];
+  let bool = helperBalanced(rootNode);
+  if (bool === false) return false;
+
+  while (queue.length) {
+    let el = queue.shift();
+    bool = helperBalanced(el);
+    if (bool === false) return false;
+    if (el.left) {
+      queue.push(el.left);
+    }
+
+    if (el.right) {
+      queue.push(el.right);
+    }
+
+  }
+
+  return true;
 }
 
-function helperBalanced(currentNode, h=-1){
+    //        13
+    //       /  \
+    //      2    3
+    //    /  \    \
+    //   4    5    6
+    //  /    / \    \
+    // 7    8   9   10
+    //         /     \
+    //        11     12
+    //              /
+    //             1
 
-  if (!currentNode) return h;
-  h++;
+function helperBalanced(currentNode){
 
-  h_left = helperHeight(currentNode.left, h);
-  h_right = helperHeight(currentNode.right, h);
-
-  return Math.abs(h_left - h_right) < 1;
+  // if (!currentNode) return h;
+  // h++;
+  debugger
+  const h_left = getHeight(currentNode.left);
+  const h_right = getHeight(currentNode.right);
+  
+  return Math.abs(h_left - h_right) <= 1;
 }
 
 function countNodes (rootNode) {
@@ -198,19 +227,19 @@ function inOrderPredecessor (rootNode, target) {
   return undefined;
 }
 
-function inOrderTraversal(currentNode = rootNode, arr=[]) {
+function inOrderTraversal(currentNode, arr=[]) {
   if (!currentNode) return;
 
   inOrderTraversal(currentNode.left,arr);
   arr.push(currentNode.val);
   inOrderTraversal(currentNode.right,arr);
 
-  return arr; // why do I have to put return arr here, instead of making return to return arr on line 202 (base case)?
+  return arr; // why do I have to put return arr here: because there are multiple recursions, and the initial function needs a value to return;
+              // if only 1 recursion, can return that recursion instead.
 }
-
 function deleteNodeBST(rootNode, target) {
   // Do a traversal to find the node. Keep track of the parent
-  
+
 
   // Undefined if the target cannot be found
 
@@ -280,6 +309,14 @@ btRootBig.left.right.right.left = new TreeNode(11);
 btRootBig.right.right.right.right = new TreeNode(12);
 btRootBig.right.right.right.right.left = new TreeNode(1);
 
-console.log(inOrderTraversal(btRootBig))
+// console.log(balancedTree(btRoot))//.to.be.true;
+// console.log(balancedTree(btRoot.right))//.to.be.true;
+
+// console.log(balancedTree(btRootBig))//.to.be.false;
+// console.log(balancedTree(btRootBig.left))//.to.be.true;
+// console.log(balancedTree(btRootBig.right))//.to.be.false;
+// console.log(balancedTree(btRootBig.right.right))//.to.be.false;
+console.log(balancedTree(btRootBig.right.right.right))//.to.be.false;
+// console.log(balancedTree(btRootBig.right.right.right.right))//.to.be.true;
 
 
