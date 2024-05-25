@@ -393,6 +393,12 @@ describe('Binary Tree Practice', () => {
 
     it('correctly deletes a node with one child', function() {
 
+
+    //      4
+    //    /   \
+    //   2     6
+    //  / \   / \
+    // 1   3 5   7
       deleteNodeBST(bstRoot, 1);
       deleteNodeBST(bstRoot, 2);
       expect(bstRoot.left.val).to.equal(3);
