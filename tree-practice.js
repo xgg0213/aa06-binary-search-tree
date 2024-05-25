@@ -118,6 +118,16 @@ function helperHeight(currentNode, h=-1){
   return Math.max(h_left, h_right);
 }
 
+// option 2: with recursion by itself
+// function getHeight(rootNode) {
+//   if (!rootNode) return -1;
+
+//   let leftDepth = getHeight(rootNode.left);
+//   let rightDepth = getHeight(rootNode.right);
+
+//   return Math.max(rightDepth, leftDepth) + 1
+// }
+
 function balancedTree (rootNode) {
   // Your code here 
   // empty tree
@@ -126,8 +136,6 @@ function balancedTree (rootNode) {
   // non empty tree
   // need to iterate through each of the node within the tree, not just the rootNode
   let queue = [rootNode];
-  let bool = helperBalanced(rootNode);
-  if (bool === false) return false;
 
   while (queue.length) {
     let el = queue.shift();
@@ -146,23 +154,8 @@ function balancedTree (rootNode) {
   return true;
 }
 
-    //        13
-    //       /  \
-    //      2    3
-    //    /  \    \
-    //   4    5    6
-    //  /    / \    \
-    // 7    8   9   10
-    //         /     \
-    //        11     12
-    //              /
-    //             1
-
 function helperBalanced(currentNode){
 
-  // if (!currentNode) return h;
-  // h++;
-  debugger
   const h_left = getHeight(currentNode.left);
   const h_right = getHeight(currentNode.right);
   
@@ -239,7 +232,7 @@ function inOrderTraversal(currentNode, arr=[]) {
 }
 function deleteNodeBST(rootNode, target) {
   // Do a traversal to find the node. Keep track of the parent
-
+  
 
   // Undefined if the target cannot be found
 
